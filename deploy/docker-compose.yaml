@@ -1,0 +1,14 @@
+---
+version: "2"
+services:
+# API Endpoint
+  api:
+    image: "mayankt/autocomplete-api"
+    environment:
+      - HOST=$DBIP
+      - USER=$USERNAME
+      - PASS=$USERPASS
+    restart: always
+    ports:
+      - "80:5000"
+    hostname: api

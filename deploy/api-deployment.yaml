@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -v
+    kompose.version: 1.2.0 (99f88ef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api
+  name: api
+spec:
+  replicas: 3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: api
+    spec:
+      containers:
+      - env:
+        - name: HOST
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: HOST
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: PASS
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: USER
+        image: mayankt/autocomplete-api
+        name: api
+        ports:
+        - containerPort: 5000
+        resources: {}
+      restartPolicy: Always
+status: {}
